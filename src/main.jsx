@@ -5,6 +5,9 @@ import About from './Components/About.jsx'
 import Navbar from './Components/Navbar.jsx'
 import Home from './Components/Home.jsx'
 import ProductPage from './Components/ProductPage.jsx'
+import Product from './Components/Product.jsx'
+import SignIn from './Components/SignIn.jsx'
+import SignUp from './Components/SignUp.jsx'
 
 function App(){
   return (
@@ -30,10 +33,22 @@ const router = createBrowserRouter([
         element:<About/>
       },
       {
+        path:"/product",
+        element:<Product/>
+      },
+      {
         path:"/ProductPage/:id",
         element:<ProductPage/>
       }
     ]
+  },
+  {
+    path:"signin",
+    element:<SignIn/>
+  },
+  {
+    path:"signup",
+    element:<SignUp/>
   }
 ])
 

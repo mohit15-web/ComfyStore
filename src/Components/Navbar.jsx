@@ -1,58 +1,71 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Menu, Moon, ShoppingCart, X } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Menu, Moon, ShoppingCart, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const menuItems = [
   {
-    name: 'Home',
-    href: '/',
+    name: "Home",
+    href: "/",
   },
   {
-    name: 'About',
-    href: '/about',
+    name: "About",
+    href: "/about",
   },
   {
-    name: 'Products',
-    href: '#',
+    name: "Products",
+    href: "/product",
   },
   {
-    name: 'Cart',
-    href: '#',
+    name: "Cart",
+    href: "#",
   },
-]
+];
 
 function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
-    <div className="relative w-full bg-white py-6">
+    <div className="relative w-full bg-white pb-6">
+        <div className='h-[40px] flex justify-center bg-[rgb(2,20,49)] text-[#C7C9D1]'>
+            <span className='w-[400px] md:w-[670px] lg:w-[1000px] flex justify-end items-center gap-5 text-[14px]'>
+                    <p className='hover:cursor-pointer'><Link to="/signin">Sign in / Guest</Link></p>
+                    <p className='hover:cursor-pointer'><Link to="/signup">Create Account</Link></p>
+            </span>
+        </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
-        <div className="inline-flex items-center space-x-2">
+       <Link to="/">
+       <div className="inline-flex items-center space-x-2">
           <span className="font-bold text-xl">Comfy</span>
         </div>
+       </Link>
         <div className="hidden lg:block">
           <ul className="inline-flex space-x-8">
             {menuItems.map((item) => (
               <li key={item.name}>
-                <Link
-                  to={item.href}
-                  className="text-sm font-semibold text-gray-800 hover:text-gray-900"
-                >
-                  {item.name}
+                <Link to={item.href}>
+                  <p className="text-sm font-semibold text-gray-800 hover:text-gray-900">
+                    {" "}
+                    {item.name}
+                  </p>
                 </Link>
               </li>
             ))}
           </ul>
         </div>
         <div className="hidden lg:block ">
-            <button className='mx-4'><Moon size={20} strokeWidth={1.25} /></button>
-          <button> <ShoppingCart size={20} strokeWidth={1.5} /> </button>
+          <button className="mx-4">
+            <Moon size={20} strokeWidth={1.25} />
+          </button>
+          <button>
+            {" "}
+            <ShoppingCart size={20} strokeWidth={1.5} />{" "}
+          </button>
         </div>
         <div className="lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
@@ -103,6 +116,6 @@ function Navbar() {
         )}
       </div>
     </div>
-  )
+  );
 }
 export default Navbar;
