@@ -8,10 +8,13 @@ import ProductPage from './Components/ProductPage.jsx'
 import Product from './Components/Product.jsx'
 import SignIn from './Components/SignIn.jsx'
 import SignUp from './Components/SignUp.jsx'
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from 'react-toastify'
 
 function App(){
   return (
     <>
+    <ToastContainer/>
     <Navbar/>
     <Outlet/>
     </>
