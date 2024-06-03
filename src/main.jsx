@@ -10,13 +10,17 @@ import SignIn from './Components/SignIn.jsx'
 import SignUp from './Components/SignUp.jsx'
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify'
+import Cart from './Components/Cart.jsx'
+import { CartProvider } from 'react-use-cart'
 
 function App(){
   return (
     <>
-    <ToastContainer/>
+   <CartProvider>
+   <ToastContainer/>
     <Navbar/>
     <Outlet/>
+   </CartProvider>
     </>
   )
 }
@@ -40,6 +44,10 @@ const router = createBrowserRouter([
         element:<Product/>
       },
       {
+        path:"/cart",
+        element:<Cart/>
+      },
+      {
         path:"/ProductPage/:id",
         element:<ProductPage/>
       }
@@ -57,4 +65,4 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
-)
+);

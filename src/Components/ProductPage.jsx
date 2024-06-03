@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useCart } from "react-use-cart";
 
 function ProductPage() {
-  // const[productInfo,setProductInfo] = useState([])
-  const [productTitle, setProductTitle] = useState(6);
+  const { addItem } = useCart();
+  const [CurrProduct, setCurrProduct] = useState({});
   const productId = useParams();
   const currId = productId.id;
   const fetchData = async () => {
@@ -12,8 +14,8 @@ function ProductPage() {
         `https://strapi-store-server.onrender.com/api/products/${currId}`
       );
       let data = await res.json();
-      console.log("current product", data.data.attributes.title);
-      setProductTitle(data.data.attributes);
+      console.log("current product", data);
+      setCurrProduct(data.data.attributes);
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +24,9 @@ function ProductPage() {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log("state arr", productTitle);
+  console.log(CurrProduct);
+
+  // console.log("state arr", CurrProduct);
   return (
     <div className="mx-auto max-w-7xl px-4 md:px-8 2xl:px-16">
       <div className="pt-8">
@@ -40,8 +44,7 @@ function ProductPage() {
             <li className="text-body mt-0.5 text-base">/</li>
             <li className="text-body hover:text-heading px-2.5 text-sm transition duration-200 ease-in first:pl-0 last:pr-0">
               <a className="capitalize" href="#">
-                {/* {productId.attributes?.title} */}
-                {productTitle.title}
+                {CurrProduct.title}
               </a>
             </li>
           </ol>
@@ -53,8 +56,8 @@ function ProductPage() {
               className="col-span-1 transition duration-150 ease-in hover:opacity-90"
             >
               <img
-                src={productTitle.image}
-                alt={productTitle.title}
+                src={CurrProduct.image}
+                alt={CurrProduct.title}
                 className="w-full object-cover"
               />
             </div>
@@ -63,17 +66,17 @@ function ProductPage() {
         <div className="col-span-4 pt-8 lg:pt-0">
           <div className="mb-7 border-b border-gray-300 pb-7">
             <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl 2xl:text-3xl">
-              {productTitle.title}
+              {CurrProduct.title}
             </h2>
             <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-              {productTitle.description}
+              {CurrProduct.description}
             </p>
             <div className="mt-5 flex items-center ">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
-                {productTitle.price / 100}
+                ${CurrProduct.price / 100}
               </div>
               <span className="font-segoe pl-2 text-sm text-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
-                {productTitle.price / 100 + 20}
+                {CurrProduct.price / 100 + 20}
               </span>
             </div>
           </div>
@@ -132,6 +135,13 @@ function ProductPage() {
             <button
               type="button"
               className="h-11 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              onClick={() => {
+                addItem({...CurrProduct,id:Date.now()})
+                toast.success("Item Added In Cart", {
+                  position: "top-center",
+                  theme: "light",
+                });
+              }}
             >
               Add to cart
             </button>
@@ -152,7 +162,7 @@ function ProductPage() {
                   className="hover:text-heading transition hover:underline"
                   href="#"
                 >
-                  {productTitle.category}
+                  {CurrProduct.category}
                 </a>
               </li>
             

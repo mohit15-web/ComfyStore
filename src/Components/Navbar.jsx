@@ -3,6 +3,7 @@
 import React from "react";
 import { Menu, Moon, ShoppingCart, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCart } from "react-use-cart";
 
 const menuItems = [
   {
@@ -19,11 +20,13 @@ const menuItems = [
   },
   {
     name: "Cart",
-    href: "#",
+    href: "/cart",
   },
 ];
 
 function Navbar() {
+  const {items} = useCart();
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const toggleMenu = () => {
@@ -38,10 +41,10 @@ function Navbar() {
                     <p className='hover:cursor-pointer'><Link to="/signup">Create Account</Link></p>
             </span>
         </div>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
        <Link to="/">
        <div className="inline-flex items-center space-x-2">
-          <span className="font-bold text-xl">Comfy</span>
+          <span className="font-bold text-3xl">Comfy</span>
         </div>
        </Link>
         <div className="hidden lg:block">
@@ -49,7 +52,7 @@ function Navbar() {
             {menuItems.map((item) => (
               <li key={item.name}>
                 <Link to={item.href}>
-                  <p className="text-sm font-semibold text-gray-800 hover:text-gray-900">
+                  <p className="text-xl hover:underline font-semibold text-gray-800 hover:text-gray-900">
                     {" "}
                     {item.name}
                   </p>
@@ -62,10 +65,15 @@ function Navbar() {
           <button className="mx-4">
             <Moon size={20} strokeWidth={1.25} />
           </button>
-          <button>
-            {" "}
-            <ShoppingCart size={20} strokeWidth={1.5} />{" "}
+          <Link to={"/cart"}>
+          <button
+            type="button"
+            className="relative rounded-md px-3 py-2 font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          >
+            <ShoppingCart />
+            <h1 className='absolute -top-2 -right-2 px-2 rounded-full text-white bg-black'>{items.length}</h1>
           </button>
+          </Link>
         </div>
         <div className="lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />

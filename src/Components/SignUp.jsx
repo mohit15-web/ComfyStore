@@ -29,11 +29,11 @@ function SignUp() {
         console.log(user);
       })
       .then(() => {
-        navigate("/signin");
         toast.success("account created successfully", {
           position: "top-center",
           theme: "light",
         });
+        navigate("/signin");
       })
       .catch((error) => {
         console.log(error);
